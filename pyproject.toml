@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "figrip"
+version = "0.1.0"
+description = "Recover exact data from vector plots inside PDF papers - no clicking, no pixels."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = ["pymupdf>=1.24", "numpy>=1.24"]
+
+[project.optional-dependencies]
+ocr = ["rapidocr-onnxruntime"]
+dev = ["pytest", "matplotlib"]
+
+[project.scripts]
+figrip = "figrip.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["figrip*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

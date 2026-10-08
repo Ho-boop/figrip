@@ -1,0 +1,6 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+out/
+tests/real/*.pdf
+tests/corpus/out/
