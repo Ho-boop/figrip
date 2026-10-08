@@ -1518,7 +1518,9 @@ def _drop_duplicates(chains: list[_Chain]) -> list[_Chain]:
                 continue
             ends = (np.hypot(*(o.pts[0] - c.pts[0])) + np.hypot(*(o.pts[-1] - c.pts[-1])),
                     np.hypot(*(o.pts[0] - c.pts[-1])) + np.hypot(*(o.pts[-1] - c.pts[0])))
-            if min(ends) < 0.2:
+            # same ends are not enough (EQE curves all start and end at 0): whole curve must match
+            if (min(ends) < 0.2 and _project(c.pts, o.pts)[0].max() < 0.2
+                    and _project(o.pts, c.pts)[0].max() < 0.2):
                 dup = o
                 break
         if dup is not None:
