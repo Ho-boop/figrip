@@ -25,6 +25,6 @@ def extract(pdf_path: str, pages: Optional[Iterable[int]] = None, ocr: bool = Tr
             for panel in axes.find_panels(pc, page=page if ocr else None, hints=hints):
                 found = series.extract_series(pc, panel)
                 for s in found:
-                    s.data = panel.to_data(s.page_pts)
+                    s.data = panel.to_data(s.page_pts, s.axis)
                 results.append(FigureResult(panel, found))
     return results

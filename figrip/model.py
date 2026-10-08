@@ -97,6 +97,7 @@ class AxisCalib:
     residual: float = 0.0         # max |fit - tick value| in units of tick spacing
     label: Optional[str] = None   # axis title, e.g. "Voltage (V)"
     source: Literal["text", "ocr", "manual"] = "text"
+    color: Optional[Color] = None  # spine/tick colour when the axis is coloured (twin-y plots)
 
     def to_data(self, pos):
         v = self.a * np.asarray(pos, dtype=float) + self.b
@@ -129,10 +130,12 @@ class Panel:
     y: AxisCalib
     label: Optional[str] = None   # panel letter "a", "b"... if found
     notes: list[str] = field(default_factory=list)  # warnings for the user
+    y2: Optional[AxisCalib] = None  # right-hand y axis of a twin-y plot
 
-    def to_data(self, pts: np.ndarray) -> np.ndarray:
+    def to_data(self, pts: np.ndarray, axis: str = "y") -> np.ndarray:
         pts = np.asarray(pts, float).reshape(-1, 2)
-        return np.column_stack([self.x.to_data(pts[:, 0]), self.y.to_data(pts[:, 1])])
+        yc = self.y2 if axis == "y2" and self.y2 is not None else self.y
+        return np.column_stack([self.x.to_data(pts[:, 0]), yc.to_data(pts[:, 1])])
 
 
 @dataclass
@@ -143,6 +146,7 @@ class Series:
     page_pts: np.ndarray          # (N, 2) page coords, ordered along x for lines
     data: np.ndarray              # (N, 2) data coords (filled by pipeline via Panel.to_data)
     path_ids: list[int] = field(default_factory=list)
+    axis: Literal["y", "y2"] = "y"  # which y axis the series is read against
 
 
 @dataclass
