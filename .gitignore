@@ -4,3 +4,11 @@ __pycache__/
 out/
 tests/real/*.pdf
 tests/corpus/out/
+.venv/
+build/
+dist/
+.coverage
+htmlcov/
+.env
+.env.*
+*.log

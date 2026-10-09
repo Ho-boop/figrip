@@ -5,15 +5,27 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "figrip"
 version = "0.1.0"
-description = "Recover exact data from vector plots inside PDF papers - no clicking, no pixels."
+description = "Recover plotted data from vector PDF figures, with calibration overlays and OPV metrics."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
+authors = [{name = "Huan Hou"}]
+keywords = ["pdf", "vector", "plot-digitization", "photovoltaics", "scientific-data"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
 dependencies = ["pymupdf>=1.24", "numpy>=1.24"]
 
 [project.optional-dependencies]
 ocr = ["rapidocr-onnxruntime"]
 dev = ["pytest", "matplotlib"]
+
+[project.urls]
+Homepage = "https://github.com/Ho-boop/figrip"
+Repository = "https://github.com/Ho-boop/figrip"
+Issues = "https://github.com/Ho-boop/figrip/issues"
 
 [project.scripts]
 figrip = "figrip.cli:main"
@@ -26,3 +38,6 @@ testpaths = ["tests"]
 
 [tool.setuptools.package-data]
 figrip = ["data/*.csv"]
+
+[tool.setuptools]
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
